@@ -1,0 +1,7 @@
+{% extends "ToDo/index.html" %}
+
+{% block body %}
+    <h1>THIS IS TASKS</h1>
+    <h1><a href="{% url 'task_details' 'slug=task.slug' %}">{{task.name}}</a></h1>
+    <h1>{{task.user.last_name}}</h1>
+{% endblock body %}
