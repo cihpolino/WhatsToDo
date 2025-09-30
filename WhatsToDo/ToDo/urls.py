@@ -5,4 +5,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("tasks", views.show_tasks, name="tasks"),
     path("tasks/<slug:slug>", views.show_details, name="task_details"),
+    path("login", views.login_view, name="login"),
 ]
