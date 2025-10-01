@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 import logging
 from .forms import redactForm
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def index(request):
@@ -82,3 +83,20 @@ def redact_task(request, task_id):
         "form": form,
         "task": task,
     })
+
+def signup_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save() #creates a user
+            login(request, user)
+            return HttpResponseRedirect(reverse("tasks"))
+    else:
+        form = UserCreationForm()
+
+    return render(request, "ToDo/signup.html", {
+        "form": form
+    })
+
+        # firs_name = request.POST.get("firs_name")
+        # last_name = request.POST.get("last_name")
