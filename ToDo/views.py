@@ -4,6 +4,9 @@ from .models import Task
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 import logging
+from .forms import redactForm
+from django.urls import reverse
+
 # Create your views here.
 def index(request):
     return render(request, "ToDo/index.html")
@@ -64,4 +67,18 @@ def delete_task(request, task_id):
     return HttpResponseRedirect("/tasks")
 
 def redact_task(request, task_id):
-    ...
+    task = Task.objects.get(id=task_id)
+    if request.method =="POST":
+        name = request.POST["name"]
+        description = request.POST["description"]
+        task.name = name
+        task.description = description
+        task.save()
+        return HttpResponseRedirect(reverse("tasks"))
+
+
+    form = redactForm(initial={"name": f"{task.name}", "description": f"{task.description}"})
+    return render(request, "ToDo/task_redact.html", {
+        "form": form,
+        "task": task,
+    })

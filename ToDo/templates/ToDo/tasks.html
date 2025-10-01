@@ -8,7 +8,7 @@
             <li>
                 <a href="{% url "task_details" slug=task.slug %}">{{task.name}}</a>
                 <a href="{% url "task-delete" task.id %}"><button>Delete</button></a>
-                <a href="{% url "task-redact" task.id %}"><button>Delete</button></a>
+                <a href="{% url "task-redact" task.id %}"><button>Redact</button></a>
             </li>
         </ul>
     {% endfor %}

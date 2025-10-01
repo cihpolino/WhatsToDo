@@ -1,5 +1,5 @@
 from django import forms
 
-class LoginForm(forms.Form):
+class redactForm(forms.Form):
     name = forms.CharField(max_length=100)
-    password = forms.CharField(max_length=100, widget=forms.PasswordInput(), label="password")
+    description = forms.CharField(max_length=1000)

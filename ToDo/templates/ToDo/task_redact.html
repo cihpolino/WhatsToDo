@@ -1,0 +1,10 @@
+{% extends "ToDo/index.html" %}
+
+{% block body %}
+    <form action="{% url "task-redact" task.id %}" method="post">
+        {% csrf_token %}
+        {{form.name}}
+        {{form.description}}
+        <input type="submit">
+    </form>
+{% endblock body %}
