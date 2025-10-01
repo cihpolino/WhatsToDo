@@ -1,11 +1,17 @@
 {% extends "ToDo/index.html" %}
 
 {% block body %}
+    <h1>hi {{first_name}}, {{last_name}}</h1>
     <h1>THIS IS TASKS</h1>
     {% for task in tasks %}
         <ul>
-            <li><a href="{% url "task_details" slug=task.slug %}">{{task.name}}</a></li>
+            <li>
+                <a href="{% url "task_details" slug=task.slug %}">{{task.name}}</a>
+                <a href="{% url "task-delete" task.id %}"><button>Delete</button></a>
+                <a href="{% url "task-redact" task.id %}"><button>Delete</button></a>
+            </li>
         </ul>
     {% endfor %}
-    <h1>{{task.user.last_name}}</h1>
+    <a href="{% url "logout" %}"><button>Logout</button></a>
+    <a href="{% url "task-New" %}"><button>New task</button></a>
 {% endblock body %}

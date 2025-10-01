@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Task
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 import logging
 # Create your views here.
 def index(request):
@@ -11,8 +11,13 @@ def index(request):
 def show_tasks(request):
     user = request.user
     tasks = Task.objects.filter(user=user)
+    # get name of the user
+    first_name = user.first_name
+    last_name = user.last_name
     return render(request, "ToDo/tasks.html", {
         "tasks" : tasks,
+        "first_name": first_name,
+        "last_name": last_name
     })
 
 def show_details(request, slug=None):
@@ -20,26 +25,10 @@ def show_details(request, slug=None):
         task = get_object_or_404(Task, slug=slug)
     return render(request, "ToDo/task_details.html", {
         "task": task,
+
     })
 
 def login_view(request):
-    # if request.method == "POST":
-    #     form = LoginForm(request.POST)
-    #     if form.is_valid():
-    #         username = form.cleaned_data['username']
-    #         password = form.cleaned_data['password']
-    #         user = authenticate(request, username=username, password=password)
-
-    #     if not user:
-    #         auth_login(request, user)
-    #         return redirect("tasks")
-    #     else:
-    #         form.add_error(None, "Invalid username or password")
-        
-    # else:
-    #     form = LoginForm()
-    
-    # return render(request, "ToDo/login.html")
 
     if request.method == "POST":
         username = request.POST["username"]
@@ -53,3 +42,26 @@ def login_view(request):
                 "message": "Invalid credentials."
             })
     return render(request, "ToDo/login.html")
+
+def logout_view(request):
+    logout(request)
+    return render(request, "ToDo/logout.html")
+
+def new_task(request):
+    # Take info
+    if request.method == "POST":
+        user = request.user
+        name = request.POST['name']
+        description = request.POST['description']
+        # create task
+        Task.objects.create(user=user, name=name, description=description)
+        return HttpResponseRedirect("tasks")
+    return render(request, "ToDo/New.html")
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.delete()
+    return HttpResponseRedirect("/tasks")
+
+def redact_task(request, task_id):
+    ...

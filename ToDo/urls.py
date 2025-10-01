@@ -6,4 +6,8 @@ urlpatterns = [
     path("tasks", views.show_tasks, name="tasks"),
     path("tasks/<slug:slug>", views.show_details, name="task_details"),
     path("login", views.login_view, name="login"),
+    path("logout", views.logout_view, name="logout"),
+    path("tasks-New", views.new_task, name="task-New"),
+    path("task-delete/<int:task_id>", views.delete_task, name="task-delete"),
+    path("task-redact/<int:task_id>", views.redact_task, name="task-redact"),
 ]
