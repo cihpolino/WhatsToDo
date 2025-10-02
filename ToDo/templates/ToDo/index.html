@@ -9,6 +9,8 @@
 <body>
     {% block body %}
         <h1>This is a main page</h1>
+        <a href="{% url "signup" %}"><button>Signup</button></a>
+        <a href="{% url "login" %}"><button>Login</button></a>
     {% endblock body %}
 </body>
 </html>

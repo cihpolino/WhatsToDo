@@ -4,13 +4,17 @@ from .models import Task
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 import logging
-from .forms import redactForm
+from .forms import redactForm, CustomUserCreationForm
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 def index(request):
-    return render(request, "ToDo/index.html")
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("tasks"))
+    else:
+        return render(request, "ToDo/index.html")
 
 def show_tasks(request):
     user = request.user
@@ -49,7 +53,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, "ToDo/logout.html")
+    return HttpResponseRedirect(reverse("index"))
+    # return render(request, "ToDo/logout.html")
 
 def new_task(request):
     # Take info
@@ -86,17 +91,22 @@ def redact_task(request, task_id):
 
 def signup_view(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save() #creates a user
             login(request, user)
             return HttpResponseRedirect(reverse("tasks"))
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     return render(request, "ToDo/signup.html", {
         "form": form
     })
 
-        # firs_name = request.POST.get("firs_name")
-        # last_name = request.POST.get("last_name")
+def task_toggle(request, task_id):
+    if request.method == "POST":
+        task = Task.objects.get(id=task_id)
+        status = request.POST.get("status")
+        task.completion = bool(status)
+        task.save()
+        return HttpResponseRedirect(reverse("tasks"))

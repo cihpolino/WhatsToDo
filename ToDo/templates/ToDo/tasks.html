@@ -6,9 +6,14 @@
     {% for task in tasks %}
         <ul>
             <li>
+                <form action="{% url "task-toggle" task.id %}" method="post">
+                {% csrf_token %}
+                <input type="checkbox" name="status" {% if task.completion %}checked{% endif %}
+                onchange="this.form.submit()">
                 <a href="{% url "task_details" slug=task.slug %}">{{task.name}}</a>
                 <a href="{% url "task-delete" task.id %}"><button>Delete</button></a>
                 <a href="{% url "task-redact" task.id %}"><button>Redact</button></a>
+                </form>
             </li>
         </ul>
     {% endfor %}
