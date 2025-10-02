@@ -28,9 +28,9 @@ def show_tasks(request):
         "last_name": last_name
     })
 
-def show_details(request, slug=None):
-    if slug:
-        task = get_object_or_404(Task, slug=slug)
+def show_details(request, task_id=None):
+    if task_id:
+        task = Task.objects.get(id=task_id)
     return render(request, "ToDo/task_details.html", {
         "task": task,
 
@@ -81,8 +81,7 @@ def redact_task(request, task_id):
         task.description = description
         task.save()
         return HttpResponseRedirect(reverse("tasks"))
-
-
+    
     form = redactForm(initial={"name": f"{task.name}", "description": f"{task.description}"})
     return render(request, "ToDo/task_redact.html", {
         "form": form,

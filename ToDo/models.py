@@ -9,7 +9,7 @@ class Task(models.Model):
     description = models.TextField(null=True, blank=True)
     completion = models.BooleanField(null=True, blank=True, default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=False, blank=True)
 
     def __str__(self):
         return self.name
