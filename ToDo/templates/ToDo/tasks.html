@@ -24,9 +24,12 @@
 {% block body %}
 
   <!-- Greeting -->
-  <h1 class="text-4xl font-extrabold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent pb-6 select-none">
-    Hi {{ first_name }} {{ last_name }}
-  </h1>
+<h1 class="text-4xl font-extrabold pb-6 select-none">
+  <span class="text-gray-900">Hi</span>
+  <span class="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+    {{ first_name }} {{ last_name }}!
+  </span>
+</h1>
 
   <h2 class="text-xl font-semibold mb-8 select-none">Your Tasks</h2>
 
@@ -54,7 +57,7 @@
         <!-- Action Buttons -->
         <div class="flex space-x-2">
           <a href="{% url 'task-redact' task.id %}">
-            <button class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded">Edit</button>
+            <button class="px-3 py-1 bg-gray-700 hover:bg-gray-900 text-white rounded">Edit</button>
           </a>
           <a href="{% url 'task-delete' task.id %}">
             <button class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded">Delete</button>
@@ -62,14 +65,14 @@
         </div>
       </div>
     {% empty %}
-      <p class="text-center text-gray-200">No tasks yet. Create one below!</p>
+      <p class="text-center text-violet-300">No tasks yet. Create one below!</p>
     {% endfor %}
   </div>
 
   <!-- Footer Actions -->
   <div class="mt-10 flex space-x-4">
     <a href="{% url 'task-New' %}">
-      <button class="px-5 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow text-white">+ New Task</button>
+      <button class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow text-white">+ New Task</button>
     </a>
     <a href="{% url 'logout' %}">
       <button class="px-5 py-2 bg-gray-800 hover:bg-gray-900 rounded-lg shadow text-white">Logout</button>

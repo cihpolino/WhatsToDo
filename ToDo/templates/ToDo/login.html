@@ -6,6 +6,10 @@
         <!-- Logo / App name -->
         <h1 class="text-3xl font-bold text-indigo-700 text-center mb-6">WhatsToDO?</h1>
 
+        {% if message %}
+        <p class="text-red-600 pb-2">{{ message }}</p>
+        {% endif %}
+
     <form action="{% url "login" %}" method="post">
         {% csrf_token %}
         <div class="mb-4">

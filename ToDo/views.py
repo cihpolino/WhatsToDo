@@ -46,8 +46,8 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect("tasks")
         else:
-            return render(request, "users/login.html", {
-                "message": "Invalid credentials."
+            return render(request, "ToDo/login.html", {
+                "message": "Invalid username or password."
             })
     return render(request, "ToDo/login.html")
 
