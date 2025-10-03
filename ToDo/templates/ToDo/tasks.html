@@ -1,6 +1,6 @@
 {% extends "ToDo/index.html" %}
 
-{% block body %}
+{% comment %} {% block body %}
     <h1>hi {{first_name}}, {{last_name}}</h1>
     <h1>THIS IS TASKS</h1>
     {% for task in tasks %}
@@ -19,4 +19,63 @@
     {% endfor %}
     <a href="{% url "logout" %}"><button>Logout</button></a>
     <a href="{% url "task-New" %}"><button>New task</button></a>
+{% endblock body %} {% endcomment %}
+
+{% block body %}
+
+  <!-- Greeting -->
+  <h1 class="text-4xl font-extrabold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent pb-6 select-none">
+    Hi {{ first_name }} {{ last_name }}
+  </h1>
+
+  <h2 class="text-xl font-semibold mb-8 select-none">Your Tasks</h2>
+
+  <!-- Tasks List -->
+  <div class="w-full max-w-2xl space-y-4">
+    {% for task in tasks %}
+      <div class="flex items-center justify-between bg-white text-gray-900 rounded-lg shadow p-4">
+        <div class="flex items-center space-x-4">
+          <!-- Toggle Checkbox -->
+          <form action="{% url 'task-toggle' task.id %}" method="post">
+            {% csrf_token %}
+            <input type="checkbox" name="status" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500" 
+              {% if task.completion %}checked{% endif %}
+              onchange="this.form.submit()">
+          </form>
+
+          <!-- Task Link -->
+          <a href="{% url 'task_details' task.id %}" 
+          class="text-lg font-medium hover:text-indigo-600 transition duration-300 ease-in-out
+          {% if task.completion %}line-through text-gray-400{% endif %}">
+            {{ task.name }}
+          </a>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex space-x-2">
+          <a href="{% url 'task-redact' task.id %}">
+            <button class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded">Edit</button>
+          </a>
+          <a href="{% url 'task-delete' task.id %}">
+            <button class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded">Delete</button>
+          </a>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center text-gray-200">No tasks yet. Create one below!</p>
+    {% endfor %}
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="mt-10 flex space-x-4">
+    <a href="{% url 'task-New' %}">
+      <button class="px-5 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow text-white">+ New Task</button>
+    </a>
+    <a href="{% url 'logout' %}">
+      <button class="px-5 py-2 bg-gray-800 hover:bg-gray-900 rounded-lg shadow text-white">Logout</button>
+    </a>
+  </div>
+
+
 {% endblock body %}
+

@@ -5,12 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsToDo?</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CDN -->
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-6">
     {% block body %}
-        <h1>This is a main page</h1>
-        <a href="{% url "signup" %}"><button>Signup</button></a>
-        <a href="{% url "login" %}"><button>Login</button></a>
+     <div class="text-center">
+        <h1 class="text-6xl font-extrabold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent mb-4">WhatsToDO?</h1>
+        <p class="text-slate-600 mb-6">This is a simple todo app. Sign up or log in to get started.</p>
+        <div class="flex gap-4 justify-center">
+        <a href="{% url 'signup' %}" class="px-6 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:bg-purple-800 transition">Sign Up</a>
+        <a href="{% url 'login' %}" class="px-6 py-2 rounded-lg border border-purple-900 text-violet-900 hover:bg-violet-100 transition">Log In</a>
+    </div>
     {% endblock body %}
 </body>
 </html>

@@ -1,10 +1,42 @@
 {% extends "ToDo/index.html" %}
 
 {% block body %}
-    <form action="{% url "task-redact" task.id %}" method="post">
+    {% comment %} <form action="{% url "task-redact" task.id %}" method="post">
         {% csrf_token %}
         {{form.name}}
         {{form.description}}
         <input type="submit">
+    </form> {% endcomment %}
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
+    
+    <!-- Header -->
+    <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+      Edit Task
+    </h1>
+
+    <!-- Form -->
+    <form action="{% url 'task-redact' task.id %}" method="post" class="flex flex-col space-y-4">
+      {% csrf_token %}
+
+      <!-- Pre-filled Task Name -->
+      <input type="text" name="name" value="{{ task.name }}" placeholder="Task Name"
+        class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
+        required>
+
+      <!-- Pre-filled Task Description -->
+      <textarea name="description" placeholder="Task Description" rows="3"
+        class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 resize-y"
+        required>{{ task.description }}</textarea>
+
+      <!-- Save Button -->
+      <input type="submit" value="Save Changes"
+        class="p-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-semibold cursor-pointer transition duration-300">
     </form>
+
+    <!-- Optional: Back button -->
+    <div class="mt-4 text-center">
+      <a href="{% url 'tasks' %}" class="text-indigo-700 hover:text-indigo-900 font-medium">← Back to Tasks</a>
+    </div>
+
+  </div>
 {% endblock body %}
