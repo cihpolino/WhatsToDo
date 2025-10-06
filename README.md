@@ -1,10 +1,10 @@
 # WhatsToDo
 A simple todo list web app built with Django for learning purposes. Users can add, update, and mark tasks as complete.
 
-## Demo:
+## 🎥Demo:
 ![Demo of Django Todo App](demo.gif)
 
-## Features:
+## ✨Features:
 - User signup
 - User login/logout
 - Add tasks
@@ -13,13 +13,13 @@ A simple todo list web app built with Django for learning purposes. Users can ad
 - Delete tasks
 - Clean and minimal UI
 
-## Tech Stack:
+## 🛠️Tech Stack:
 - Django
 - Html
 - Tailwind css
 - SQlite
 
-## How to set up:
+## 🚀How to set up:
 ```
 git clone https://github.com/cihpolino/WhatsToDo.git
 cd WhatsToDo
@@ -30,6 +30,6 @@ python manage.py migrate # (use 'py' instead of 'python' if needed)
 python manage.py runserver
 ```
 
-## Usage:
+## 💻Usage:
 After setup, open http://127.0.0.1:8000. Sign up and start managing your tasks — simple as that! Have fun idk ;3
 P.S. Email verification isn’t enabled, so you can use any address that looks like an email, e.g. example@mail.com .
