@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+# custom form for edit/redact view
 class redactForm(forms.Form):
     name = forms.CharField(max_length=100)
     description = forms.CharField(max_length=1000)
@@ -16,6 +17,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ("username", "first_name", "last_name", "email", "password1", "password2")
 
     def save(self, commit=True):
+        # Call the parent save() but DON'T write to the DB yet
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
         user.first_name = self.cleaned_data["first_name"]
