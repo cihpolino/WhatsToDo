@@ -44,7 +44,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect("tasks")
+            return HttpResponseRedirect(reverse("tasks"))
         else:
             return render(request, "ToDo/login.html", {
                 "message": "Invalid username or password."
@@ -54,7 +54,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-    # return render(request, "ToDo/logout.html")
 
 def new_task(request):
     # Take info
